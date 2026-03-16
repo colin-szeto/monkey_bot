@@ -34,15 +34,17 @@ void loop() {
     int m2Val = input.substring(commaIndex + 1).toInt();
 
     // Drive motors
-    setBTS7960(M1_RPWM, M1_LPWM, 1*m1Val); // reversing the right side so 255 corresponds with moving forward
+    setBTS7960(M1_RPWM, M1_LPWM, m1Val);
     setBTS7960(M2_RPWM, M2_LPWM, m2Val);
 
+    // user feedback via serial monitor
     Serial.print("M1: "); Serial.print(m1Val);
     Serial.print(" | M2: "); Serial.println(m2Val);
   }
 }
 
 void setBTS7960(int RPWM, int LPWM, int value) {
+  // objective: to allow the user pass it "m1,m2" and given the sign assign the command to the correct pin corresponding to forward or backward motor movement
   int pwm = abs(value);
   if (pwm > 255) pwm = 255;  // clamp to PWM range
 
