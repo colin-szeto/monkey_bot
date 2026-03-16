@@ -17,7 +17,7 @@ while True:
     center_line_x = width // 2
 
     hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
-    hsv = cv2.rotate(hsv, cv2.ROTATE_180)
+    hsv = cv2.rotate(hsv, cv2.ROTATE_180) # this line is required if your camera is mounted upside down
 
     # Red HSV ranges
     lower_red = np.array([0, 120, 70])
@@ -66,7 +66,8 @@ while True:
         diff = (midpoint_x - center_line_x)/width
         print(f"Midpoint X: {midpoint_x}, Center Line X: {center_line_x}, Difference: {diff}")
     
-        diff = (midpoint_x - center_line_x)/width
+        # diff = (midpoint_x - center_line_x)/width
+        # this is the logic of attempting to keep the midpoint between the red and blue blocks at the center of the frame
         if midpoint_x < width/5:
             monkey_bot.yaw(0.25,False)
         elif midpoint_x > width * 4/5:
